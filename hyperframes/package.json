@@ -1,0 +1,11 @@
+{
+  "name": "hyperframes-workspace",
+  "private": true,
+  "description": "Local HyperFrames workspace (CLI installed project-locally). Projects live in subfolders.",
+  "scripts": {
+    "hf": "hyperframes"
+  },
+  "devDependencies": {
+    "hyperframes": "0.8.169"
+  }
+}

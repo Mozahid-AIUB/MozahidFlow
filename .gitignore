@@ -1,0 +1,49 @@
+# ── Your footage and finished videos (private) ─────────────────────────────
+projects/*
+!projects/.gitkeep
+Thesis Video/
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.wav
+*.m4a
+
+# ── Music: Mixkit's licence forbids redistributing the files ───────────────
+assets/music/**/*.mp3
+assets/music/**/*.ogg
+
+# ── Brand assets (add your own locally) ─────────────────────────────────────
+assets/brand/*
+!assets/brand/.gitkeep
+
+# ── Installed / downloaded by setup.ps1 ─────────────────────────────────────
+tools/.venv/
+tools/bin/
+tools/_tests/
+**/node_modules/
+studio/out/
+studio/build/
+hyperframes/_test/
+.env
+# hyperframes/.env (privacy flags) is written by setup.ps1
+*.egg-info/
+__pycache__/
+**/.color-grading/
+
+# Third-party skills without a redistribution licence in their folder:
+# setup.ps1 reinstalls them from upstream at pinned commits.
+.claude/skills/remotion-*/
+.claude/skills/hyperframes/
+.claude/skills/hyperframes-*/
+.claude/skills/faceless-explainer/
+.claude/skills/general-video/
+.claude/skills/media-use/
+.claude/skills/motion-graphics/
+.claude/skills/product-launch-video/
+
+# ── Local Claude Code / editor state ────────────────────────────────────────
+.claude/settings.local.json
+.vscode/
+Thumbs.db
+desktop.ini

@@ -1,0 +1,18 @@
+{
+  "schema": "color-grading/request@1",
+  "project": {
+    "project_id": "luxury-warm",
+    "source": {"source_id": "src", "path": "<ABSOLUTE PATH TO INPUT.mp4>"},
+    "operations": [
+      {"op_id": "primary", "type": "PRIMARY_CORRECTION", "input": "source",
+       "parameters": {"exposure": 0.0, "contrast": 1.08, "saturation": 1.05, "temperature": 6000, "tint": 0.01,
+                      "gamma": 0.97, "lift": 0.0, "gain": 0.02, "crf": 18, "preset": "medium"}},
+      {"op_id": "look", "type": "LUT_APPLY", "input": "op:primary",
+       "parameters": {"lut_path": "D:/Video/tools/grading/luts/warm_luxury_split_33.cube", "lut_strength": 0.6,
+                      "crf": 18, "preset": "medium"}}
+    ],
+    "outputs": [
+      {"output_id": "final", "operation": "op:look", "path": "<ABSOLUTE PATH TO OUTPUT.mp4 inside --workspace>", "format": "mp4", "overwrite": false}
+    ]
+  }
+}

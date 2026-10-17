@@ -1,0 +1,13 @@
+# Python 3.12 venv at tools/.venv (created by setup.ps1)
+faster-whisper==1.2.1
+# av 16.1+ removed `metadata_errors`, which faster-whisper 1.2.1 still passes; keep this pin.
+av==16.0.1
+ctranslate2==4.8.3
+auto-editor==29.3.1
+librosa==1.0.0
+soundfile==0.14.0
+numpy==2.5.4
+scipy==1.18.1
+matplotlib==3.11.2
+pillow==13.0.0
+pysubs2==1.9.0

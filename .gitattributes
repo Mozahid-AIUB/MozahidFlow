@@ -1,0 +1,9 @@
+* text=auto
+# POSIX shell scripts must keep LF to run in Git Bash
+hyperframes/hf text eol=lf
+*.sh text eol=lf
+*.ttf binary
+*.png binary
+*.jpg binary
+*.ogg binary
+*.cube text

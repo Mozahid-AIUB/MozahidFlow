@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+# HyperFrames CLI wrapper (Git Bash / POSIX sh). Same behaviour as hf.cmd:
+# project-local pinned CLI, no telemetry, no update checks, no global skill installs.
+# Usage:  /d/Video/hyperframes/hf <command> [args]
+HF_HOME_DIR="$(cd "$(dirname "$0")" && pwd)"
+export HYPERFRAMES_NO_TELEMETRY=1 DO_NOT_TRACK=1 HYPERFRAMES_SKIP_SKILLS=1 \
+       HYPERFRAMES_NO_UPDATE_CHECK=1 HYPERFRAMES_NO_AUTO_INSTALL=1
+exec node "$HF_HOME_DIR/node_modules/hyperframes/bin/hyperframes.mjs" "$@"
