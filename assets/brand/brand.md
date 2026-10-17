@@ -3,10 +3,10 @@
 ## পরিচয়
 - **নাম:** Mozahidul Islam
 - **ওয়েবসাইট:** mozahidulislam.pro.bd
-- **ট্যাগলাইন:** Software Engineer · Developer
-- **বাংলা ট্যাগলাইন:** সফটওয়্যার ইঞ্জিনিয়ার · ডেভেলপার
-- **YouTube @handle:** _(দিলে বসানো হবে)_
-- **Facebook পেজ:** _(দিলে বসানো হবে)_
+- **ট্যাগলাইন:** Software Engineer · Web, Mobile & AI
+- **বাংলা ট্যাগলাইন:** সফটওয়্যার ইঞ্জিনিয়ার · ওয়েব, মোবাইল ও AI
+- **YouTube:** [@Mozahid_AIUB](https://www.youtube.com/@Mozahid_AIUB)
+- **Facebook পেজ:** https://www.facebook.com/profile.php?id=61592240008689
 
 ট্যাগলাইন বদলাতে চাইলে Claude-কে বলুন, অথবা `studio\src\brand.ts`-এ `tagline` আর `taglineBn` বদলান।
 

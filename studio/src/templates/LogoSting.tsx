@@ -10,7 +10,7 @@ export type LogoStingProps = {
   fps: number;
   orientation: "landscape" | "portrait";
   showName: boolean;
-  line: "tagline" | "taglineBn" | "website";
+  line: "tagline" | "taglineBn" | "website" | "handle";
 };
 
 export const logoStingDefaults: LogoStingProps = {
@@ -39,7 +39,7 @@ export const LogoSting: React.FC<LogoStingProps> = ({ showName, line }) => {
   const sweep = interpolate(frame, [fps * 0.9, fps * 1.7], [-30, 130], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   const logoH = portrait ? 300 : 250;
-  const lineText = line === "website" ? brand.website : line === "taglineBn" ? brand.taglineBn : brand.tagline;
+  const lineText = { tagline: brand.tagline, taglineBn: brand.taglineBn, website: brand.website, handle: `YouTube ${brand.handle}` }[line];
 
   return (
     <AbsoluteFill style={{ backgroundColor: c.bg, opacity: 1 - out }}>

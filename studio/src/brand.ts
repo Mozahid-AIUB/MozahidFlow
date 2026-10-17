@@ -3,11 +3,12 @@
 export const brand = {
   name: "Mozahidul Islam",
   channelName: "Mozahidul Islam",
-  // Shown as the handle line until a YouTube/Facebook @handle is set.
-  handle: "mozahidulislam.pro.bd",
+  handle: "@Mozahid_AIUB", // YouTube handle
   website: "mozahidulislam.pro.bd",
-  tagline: "Software Engineer · Developer",
-  taglineBn: "সফটওয়্যার ইঞ্জিনিয়ার · ডেভেলপার",
+  youtube: "https://www.youtube.com/@Mozahid_AIUB",
+  facebook: "https://www.facebook.com/profile.php?id=61592240008689",
+  tagline: "Software Engineer · Web, Mobile & AI",
+  taglineBn: "সফটওয়্যার ইঞ্জিনিয়ার · ওয়েব, মোবাইল ও AI",
   // PNG exports (staticFile paths). Live SVG version: components/LogoMark.tsx.
   logo: "brand/logo-on-dark.png" as string | null,
   logoLight: "brand/logo.png",

@@ -98,8 +98,14 @@ Brand settings: `studio/src/brand.ts`, already filled for Mozahidul Islam (see "
 - Identity:
   - Name: "Mozahidul Islam"
   - Website: mozahidulislam.pro.bd
-  - Tagline: "Software Engineer · Developer" (`taglineBn` for Bengali). Don't add "Researcher".
-  - Until the user gives a YouTube or FB @handle, the website stands in as the handle.
+  - Tagline: "Software Engineer · Web, Mobile & AI"; Bengali "সফটওয়্যার ইঞ্জিনিয়ার · ওয়েব, মোবাইল ও AI"
+    (`tagline` / `taglineBn` in brand.ts). The user chose it: don't add "Researcher" or change it unasked.
+  - Work covered: websites, web apps, Android and iOS apps, AI, SaaS and dev tools.
+  - YouTube: `@Mozahid_AIUB` (https://www.youtube.com/@Mozahid_AIUB). This is `brand.handle`.
+  - Facebook page: https://www.facebook.com/profile.php?id=61592240008689 (no vanity name, so show the link,
+    not a made-up page name).
+  - Every `metadata.md` description ends with the YouTube, Facebook and website links.
+  - LogoSting `line: "handle"` shows "YouTube @Mozahid_AIUB".
 - Palette:
   - navy `#0A0F1C` (canvas), surface `#101726`
   - text `#E9EEF6`, muted `#8A97AB`

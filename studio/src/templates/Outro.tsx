@@ -58,7 +58,9 @@ export const Outro: React.FC<OutroProps> = ({ thanks, cta, showEndScreenGuides }
           <LogoMark height={84} variant="onDark" />
           <div>
             <div style={{ fontFamily: brand.fonts.latin, color: c.text, fontSize: 38, fontWeight: 600 }}>{brand.name}</div>
-            <div style={{ fontFamily: brand.fonts.latin, color: c.muted, fontSize: 30, marginTop: 4 }}>{brand.website}</div>
+            <div style={{ fontFamily: brand.fonts.latin, color: c.muted, fontSize: 30, marginTop: 4 }}>
+              <span style={{ color: c.emerald }}>{brand.handle}</span> · {brand.website}
+            </div>
           </div>
         </div>
       </div>
