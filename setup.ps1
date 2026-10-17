@@ -19,7 +19,12 @@ $RemotionSkillsRepo = 'https://github.com/remotion-dev/skills.git'
 $RemotionSkillsSha  = '1441a11e95db35443bd76bb318386c0d3ca00053'
 $RemotionSkills     = 'remotion-best-practices','remotion-create','remotion-markup','remotion-studio','remotion-render',
                       'remotion-captions','remotion-docs','remotion-multimedia','remotion-upgrade'
-$DeepFilterUrl      = 'https://github.com/Rikorose/DeepFilterNet/releases/download/v0.5.6/deep-filter-0.5.6-x86_64-pc-windows-msvc.exe'
+$HyperFramesRepo    = 'https://github.com/heygen-com/hyperframes.git'
+$HyperFramesSha     = 'cbf3f0d5474ff94aa3243f4c2e2c3e5dc6264b2d'
+$HyperFramesSkills  = 'hyperframes','hyperframes-core','hyperframes-cli','hyperframes-animation','hyperframes-keyframes',
+                      'hyperframes-creative','hyperframes-audio','hyperframes-registry','hyperframes-studio','media-use',
+                      'motion-graphics','general-video','product-launch-video','faceless-explainer'
+$DeepFilterUrl      ='https://github.com/Rikorose/DeepFilterNet/releases/download/v0.5.6/deep-filter-0.5.6-x86_64-pc-windows-msvc.exe'
 $DeepFilterSha256   = '75e11fa16445f560cb6b021521ddb89e89270d13b83089705d98776f58fd7915'
 
 function Step($msg) { Write-Host "`n==> $msg" -ForegroundColor Cyan }
@@ -35,6 +40,20 @@ function Ensure-Tool($wingetId, $command) {
   winget install --id $wingetId -e --silent --accept-package-agreements --accept-source-agreements
   Refresh-Path
   if (-not (Get-Command $command -ErrorAction SilentlyContinue)) { throw "$command still not on PATH; open a new terminal and re-run" }
+}
+# Copy skill folders from <repo>/skills at one pinned commit into .claude\skills (skipped if the first one exists).
+function Install-PinnedSkills($repo, $sha, [string[]]$names) {
+  $dest = Join-Path $Root '.claude\skills'
+  if (Test-Path (Join-Path $dest $names[0])) { Write-Host '  already installed'; return }
+  $tmp = Join-Path $env:TEMP ("skills-" + [guid]::NewGuid().ToString('N').Substring(0,8))
+  try {
+    Invoke-Native git @('init','-q',$tmp)
+    Invoke-Native git @('-C',$tmp,'remote','add','origin',$repo)
+    Invoke-Native git @('-C',$tmp,'fetch','-q','--depth','1','origin',$sha)
+    Invoke-Native git @('-C',$tmp,'checkout','-q','FETCH_HEAD')
+    New-Item -ItemType Directory -Force $dest | Out-Null
+    foreach ($s in $names) { Copy-Item -Recurse -Force (Join-Path $tmp "skills\$s") $dest }
+  } finally { Remove-Item -Recurse -Force $tmp -ErrorAction SilentlyContinue }
 }
 function Npm-Install($dir) {
   Push-Location $dir
@@ -70,16 +89,10 @@ if ((Get-FileHash $df -Algorithm SHA256).Hash.ToLower() -ne $DeepFilterSha256) {
 }
 
 Step "Remotion agent skills (remotion-dev/skills @ $($RemotionSkillsSha.Substring(0,7)))"
-$skillsDir = Join-Path $Root '.claude\skills'
-if (-not (Test-Path (Join-Path $skillsDir 'remotion-best-practices'))) {
-  $tmp = Join-Path $env:TEMP ("remotion-skills-" + [guid]::NewGuid().ToString('N').Substring(0,8))
-  Invoke-Native git @('init','-q',$tmp)
-  Invoke-Native git @('-C',$tmp,'remote','add','origin',$RemotionSkillsRepo)
-  Invoke-Native git @('-C',$tmp,'fetch','-q','--depth','1','origin',$RemotionSkillsSha)
-  Invoke-Native git @('-C',$tmp,'checkout','-q','FETCH_HEAD')
-  foreach ($s in $RemotionSkills) { Copy-Item -Recurse -Force (Join-Path $tmp "skills\$s") $skillsDir }
-  Remove-Item -Recurse -Force $tmp
-} else { Write-Host '  already installed' }
+Install-PinnedSkills $RemotionSkillsRepo $RemotionSkillsSha $RemotionSkills
+
+Step "HyperFrames agent skills (heygen-com/hyperframes @ $($HyperFramesSha.Substring(0,7)))"
+Install-PinnedSkills $HyperFramesRepo $HyperFramesSha $HyperFramesSkills
 
 Step 'Remotion studio (studio\)'
 Npm-Install (Join-Path $Root 'studio')
@@ -96,7 +109,7 @@ if (-not (Test-Path $hfEnv)) {
   @('HYPERFRAMES_NO_TELEMETRY=1','DO_NOT_TRACK=1','HYPERFRAMES_SKIP_SKILLS=1','HYPERFRAMES_NO_UPDATE_CHECK=1','HYPERFRAMES_NO_AUTO_INSTALL=1') |
     Set-Content -Encoding ascii $hfEnv
 }
-#HYPERFRAMES-SKILLS#
+Invoke-Native (Join-Path $Root 'hyperframes\hf.cmd') @('telemetry','disable')
 
 if (-not $SkipModels) {
   Step 'Whisper speech-to-text models (cached under %USERPROFILE%\.cache\huggingface)'

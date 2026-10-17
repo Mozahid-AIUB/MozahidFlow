@@ -54,8 +54,8 @@ A fresh machine is set up with `setup.ps1` (see README.md).
   at before/after frames. Watch for crushed blacks, clipped highlights and steel/white turning cream. Correct a
   colour cast, but leave already-clean screen recordings ungraded. Delete `<workspace>\.color-grading\` after.
 - **hyperframes** (+ `hyperframes-*`, motion-graphics, product-launch-video, general-video, faceless-explainer,
-  media-use): HTML/GSAP motion graphics and full ad/promo builds. Local rendering only: don't use HeyGen
-  cloud, TTS or other paid/API features unless the user asks and provides the account.
+  media-use): HTML/GSAP motion graphics and full ad/promo builds. CLI pinned at 0.8.169 in `D:\Video\hyperframes`.
+  See "HyperFrames rules" below.
 - **remotion-*** (official): Remotion knowledge; used with `D:\Video\studio`.
 - **motion-broll**: speech-timed motion-graphic B-roll for talking-head videos.
 - **sound-effects**: measured SFX pass with a bundled CC0 kit, music beat-sync, -16 LUFS mix checks.
@@ -76,6 +76,34 @@ channel name, handle, logo and colours, then fill it in.
   Never put whole footage files there: the public folder is copied on every render.
 - Vertical (9:16) ad graphics are bespoke per project: build them in HyperFrames (preferred for ads) or a new
   Remotion composition.
+
+## HyperFrames rules (local-only; these override what its skills suggest)
+- Create HyperFrames projects in `D:\Video\hyperframes\<slug>` and always run the CLI through the wrapper:
+  `D:\Video\hyperframes\hf.cmd …` (PowerShell) or `/d/Video/hyperframes/hf …` (Git Bash). Never use bare `npx
+  hyperframes` from `D:\Video`, and never use the `npm run …` scripts that `init` writes: both download other
+  versions.
+- The wrappers set: no telemetry, no update checks, no auto-installs, and `HYPERFRAMES_SKIP_SKILLS=1`. So skip
+  the skills' instructions to run `hyperframes skills update` or to install skills globally.
+- Scaffold and check:
+  - `hf.cmd init <slug> --non-interactive --resolution portrait|landscape`
+  - `hf.cmd lint`, then `hf.cmd check`
+- Preview: `hf.cmd preview --background --no-open` (and `--stop` afterwards).
+- Render:
+  - `hf.cmd render --quality draft --workers 1 -o renders\draft.mp4`, then `--quality delivery`
+  - Always `--workers 1`: more workers hang on Windows, and the CPU has 2 cores.
+  - A chrome console window may appear during renders. Closing it aborts the render.
+- Alpha overlays: `render --format mov` (ProRes 4444) or `--format webm`. The root, html and body need
+  `background: transparent`.
+- Fonts: copy the TTF into the project's `assets/fonts/` and declare an `@font-face`. Media uses relative
+  `assets/…` paths; every `<audio>` needs an `id`; videos need `muted playsinline`.
+- Never run these:
+  - `publish`, `cloud render`, `lambda`, `cloudrun` (they upload the project)
+  - `npx hyperframes usage` (it reads the Claude login token)
+  - `hyperframes open` / the desktop app
+- media-use: use `--local-only`. Never use its music *generator*: it silently pip-installs torch and
+  transformers (several GB). Take music from `assets\music` and SFX from the sound-effects skill. HeyGen
+  cloud, TTS and stock search need the user's own account; ask first.
+- Copy final renders into the video's `projects\<slug>\out\`.
 
 ## Standard workflow (raw video + prompt)
 1. **Project**: `python D:\Video\tools\scripts\new_project.py <slug> --src <files>` (`--move` if D: is tight).
