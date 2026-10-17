@@ -1,5 +1,6 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { brand } from "../brand";
+import { LogoMark } from "../components/LogoMark";
 import { enter, exit } from "../lib/motion";
 
 // YouTube end screens need 5–20 s at the end of the video. The outlined boxes mark where the
@@ -53,8 +54,12 @@ export const Outro: React.FC<OutroProps> = ({ thanks, cta, showEndScreenGuides }
         <div style={{ color: c.accent, fontSize: 48, fontWeight: 600, marginTop: 30, opacity: b, transform: `translateY(${(1 - b) * 20}px)` }}>
           {cta}
         </div>
-        <div style={{ color: c.muted, fontSize: 38, marginTop: 50, opacity: b }}>
-          {brand.channelName} · {brand.handle}
+        <div style={{ display: "flex", alignItems: "center", gap: 24, marginTop: 56, opacity: b }}>
+          <LogoMark height={84} variant="onDark" />
+          <div>
+            <div style={{ fontFamily: brand.fonts.latin, color: c.text, fontSize: 38, fontWeight: 600 }}>{brand.name}</div>
+            <div style={{ fontFamily: brand.fonts.latin, color: c.muted, fontSize: 30, marginTop: 4 }}>{brand.website}</div>
+          </div>
         </div>
       </div>
       {showEndScreenGuides ? (

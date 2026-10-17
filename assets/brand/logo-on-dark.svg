@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 430" width="380" height="430">
+  <!-- Mi monogram for dark backgrounds (brand navy #0A0F1C): brighter emerald pair. -->
+  <g fill="#2BB683">
+    <rect x="40" y="90" width="50" height="202"/>
+    <polygon points="172,262 160,180 240,90 340,90 340,120 248,120 248,155"/>
+    <rect x="248" y="110" width="38" height="268"/>
+    <rect x="300" y="90" width="40" height="202"/>
+  </g>
+  <g fill="#147A5C">
+    <polygon points="50,90 98,90 196,226 172,262"/>
+    <rect x="298" y="26" width="42" height="42"/>
+  </g>
+</svg>

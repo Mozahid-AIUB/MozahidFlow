@@ -1,5 +1,6 @@
-import { AbsoluteFill, Img, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { brand } from "../brand";
+import { LogoMark } from "../components/LogoMark";
 import { enter, exit, lerp } from "../lib/motion";
 
 export type IntroProps = {
@@ -47,9 +48,11 @@ export const Intro: React.FC<IntroProps> = ({ kicker, title, subtitle }) => {
         }}
       />
       <AbsoluteFill style={{ justifyContent: "center", paddingLeft: width * 0.09, transform: `scale(${1 + out * 0.04})` }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 20, opacity: kick, transform: `translateY(${(1 - kick) * 20}px)` }}>
-          {brand.logo ? <Img src={staticFile(brand.logo)} style={{ height: 56 }} /> : null}
-          <div style={{ color: c.muted, fontSize: 38, fontWeight: 500, letterSpacing: 1 }}>{kicker}</div>
+        <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
+          <LogoMark height={64} variant="onDark" progress={Math.min(1, frame / (fps * 0.8))} />
+          <div style={{ color: c.muted, fontSize: 38, fontWeight: 500, letterSpacing: 1, opacity: kick, transform: `translateY(${(1 - kick) * 20}px)` }}>
+            {kicker}
+          </div>
         </div>
         <div style={{ height: 10, width: 140 * bar, background: c.accent, borderRadius: 5, margin: "28px 0 36px" }} />
         {lines.map((line, i) => {

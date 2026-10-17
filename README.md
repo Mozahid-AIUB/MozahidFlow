@@ -1,3 +1,5 @@
+<img src="docs/images/logo-badge.png" width="80" alt="Mi logo">
+
 # MozahidFlow
 
 **Raw video + a prompt → a finished, professional video for YouTube, Facebook and Instagram Reels.**
@@ -21,11 +23,20 @@ Built for Bengali (বাংলা) creators: every template, font and caption p
 
 All rendered locally from [`studio/`](studio/) (Remotion).
 
-| Intro | Thumbnail (1280×720) | Outro with end-screen guides |
+| Logo sting (3 s, 16:9 + 9:16) | Intro | Thumbnail (1280×720) |
 |---|---|---|
-| ![Intro](docs/images/intro.jpg) | ![Thumbnail](docs/images/thumbnail.jpg) | ![Outro](docs/images/outro.jpg) |
-| **Key points (alpha overlay)** | **Lower third (alpha overlay)** | **Subscribe reminder (alpha overlay)** |
-| ![Key points](docs/images/key-points.jpg) | ![Lower third](docs/images/lower-third.jpg) | ![Subscribe](docs/images/subscribe.jpg) |
+| ![Logo sting](docs/images/logo-sting.jpg) | ![Intro](docs/images/intro.jpg) | ![Thumbnail](docs/images/thumbnail.jpg) |
+| **Outro with end-screen guides** | **Key points (alpha overlay)** | **Lower third (alpha overlay)** |
+| ![Outro](docs/images/outro.jpg) | ![Key points](docs/images/key-points.jpg) | ![Lower third](docs/images/lower-third.jpg) |
+| **Subscribe reminder (alpha overlay)** | | |
+| ![Subscribe](docs/images/subscribe.jpg) | | |
+
+**Brand kit** ([`assets/brand/`](assets/brand/)): the "Mi" monogram as vector masters.
+- Variants for light backgrounds, dark backgrounds, white and a badge, plus PNG exports.
+- Palette: navy `#0A0F1C`, amber `#F5B841`, emerald `#2BB683`.
+- Type: Inter + Hind Siliguri / Anek Bangla.
+- An ffmpeg-skill `brand.json` handles watermarks and captions.
+- Every video gets the logo sting, a watermark and branded end cards by default.
 
 The overlays render as transparent ProRes 4444; the white background in the previews is where your footage shows through.
 
@@ -114,10 +125,17 @@ Each video gets its own folder, `projects\YYYY-MM-DD_<slug>\`:
 
 ```
 CLAUDE.md            playbook Claude follows (workflow, paths, rules)
-HOW-TO-USE.md        Bengali user guide
+HOW-TO-USE.md        Bengali user guide (folder map, 5-step flow, how to give references)
+PROMPTS.md           Bengali prompt library per video type + how to give revision feedback
+NEW-PROJECT.bat      double-click: new projects\YYYY-MM-DD_<name>\ from projects\_TEMPLATE
 setup.ps1            one-shot installer
-studio/              Remotion project: Bengali-ready templates (Intro, ChapterCard, LowerThird, Callout,
-                     KeyPoints, SubscribeReminder, Outro, Thumbnail) + brand.ts
+projects/_TEMPLATE/  raw\ reference\ assets\ work\ out\ + brief.md (Bengali brief form)
+references/          personal style library (thumbnails, intros, ads, motion graphics…; contents not tracked)
+studio/              Remotion project: Bengali-ready templates (LogoSting, Intro, ChapterCard, LowerThird,
+                     Callout, KeyPoints, SubscribeReminder, Outro, Thumbnail), LogoMark (animated SVG logo),
+                     brand.ts, FontCheck diagnostic
+assets/brand/        logo SVG masters + PNG exports, brand.md (guide), brand.json (ffmpeg-skill)
+tools/scripts/svg2png.js  SVG → transparent PNG at any width (Playwright Chromium)
 hyperframes/         HyperFrames workspace (pinned CLI, local-only wrappers hf.cmd / hf)
 tools/scripts/       new_project.py, transcribe.py (faster-whisper → txt/srt/words), clean_audio.py
 tools/grading/       colour-grade request templates + a self-made warm split-tone LUT

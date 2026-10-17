@@ -1,0 +1,13 @@
+{
+  "font": "Hind Siliguri",
+  "font_file": "D:/Video/assets/fonts/bangla/HindSiliguri-SemiBold.ttf",
+  "colors": {"primary": "F5B841", "text": "E9EEF6", "outline": "0A0F1C", "background": "0A0F1C"},
+  "logo": "D:/Video/assets/brand/logo-white.png",
+  "logo_position": "top-right",
+  "logo_scale": 84,
+  "logo_opacity": 0.65,
+  "safe_margin": 48,
+  "lang": "bn",
+  "styles": {"caption": {"font": "Hind Siliguri", "size": 30, "colour": "FFFFFF", "box": false, "position": "bottom"}},
+  "caption": {"size": 30, "position": "bottom", "animate": "pop", "karaoke": false, "bold": true}
+}

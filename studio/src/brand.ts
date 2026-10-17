@@ -1,23 +1,38 @@
-// Channel branding shared by every template. Change these once; every video picks them up.
-// Put the logo file in public/brand/ and set `logo` to e.g. "brand/logo.png".
+// Brand kit for Mozahidul Islam: shared by every template. Source files live in D:\Video\assets\brand
+// (logo SVG masters + PNG exports, brand.md). Copies used by renders are in public/brand/.
 export const brand = {
-  channelName: "আপনার চ্যানেল",
-  handle: "@yourchannel",
-  logo: null as string | null,
+  name: "Mozahidul Islam",
+  channelName: "Mozahidul Islam",
+  // Shown as the handle line until a YouTube/Facebook @handle is set.
+  handle: "mozahidulislam.pro.bd",
+  website: "mozahidulislam.pro.bd",
+  tagline: "Software Engineer · Developer",
+  taglineBn: "সফটওয়্যার ইঞ্জিনিয়ার · ডেভেলপার",
+  // PNG exports (staticFile paths). Live SVG version: components/LogoMark.tsx.
+  logo: "brand/logo-on-dark.png" as string | null,
+  logoLight: "brand/logo.png",
+  logoWhite: "brand/logo-white.png",
+  logoBadge: "brand/logo-badge.png",
   colors: {
-    bg: "#0B0F17",
-    surface: "#151B27",
-    text: "#F4F6FA",
-    muted: "#9AA3B2",
-    accent: "#FFB020",
-    accent2: "#3B82F6",
+    bg: "#0A0F1C", // deep navy (website background)
+    surface: "#101726", // cards, panels
+    text: "#E9EEF6",
+    muted: "#8A97AB",
+    accent: "#F5B841", // amber gold: highlights, CTAs, key words
+    accent2: "#2BB683", // emerald: secondary highlights, glows
+    emerald: "#2BB683", // logo main on dark
+    emeraldDeep: "#147A5C", // logo deep part on dark
+    brandGreen: "#16805B", // logo main on light
+    brandDeep: "#0C4D46", // logo deep part on light
+    live: "#4ADE80", // status dot
     youtubeRed: "#FF0033",
     facebookBlue: "#1877F2",
   },
   // Every Bengali family below also contains Latin glyphs, so mixed বাংলা + English text renders in one font.
   fonts: {
-    body: "'Hind Siliguri', 'Poppins', sans-serif",
+    body: "'Hind Siliguri', 'Inter', sans-serif",
     display: "'Anek Bangla', 'Hind Siliguri', sans-serif",
+    latin: "'Inter', 'Hind Siliguri', sans-serif",
     rounded: "'Baloo Da 2', 'Hind Siliguri', sans-serif",
     latinDisplay: "'Bebas Neue', 'Anek Bangla', sans-serif",
     mono: "'JetBrains Mono', monospace",

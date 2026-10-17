@@ -1,5 +1,6 @@
 import { AbsoluteFill, Img, staticFile } from "remotion";
 import { brand } from "../brand";
+import { LogoMark } from "../components/LogoMark";
 
 // 1280×720 still for YouTube (and Facebook). Keep the title to 3–6 big words; the highlight
 // word gets the accent box. `image` is a file in public/ (a face shot or a key frame).
@@ -24,7 +25,16 @@ const withHighlight = (line: string, word: string) => {
     <>
       {before}
       <span
-        style={{ background: brand.colors.accent, color: brand.colors.bg, padding: "0 18px", borderRadius: 14, WebkitTextStroke: "0px", textShadow: "none" }}
+        style={{
+          display: "inline-block",
+          lineHeight: 1.08,
+          background: brand.colors.accent,
+          color: brand.colors.bg,
+          padding: "6px 22px 14px",
+          borderRadius: 16,
+          WebkitTextStroke: "0px",
+          textShadow: "none",
+        }}
       >
         {word}
       </span>
@@ -52,9 +62,12 @@ export const Thumbnail: React.FC<ThumbnailProps> = ({ title, highlight, image, b
               fontSize: 128,
               fontWeight: 800,
               lineHeight: 1.22,
-              WebkitTextStroke: `3px ${c.bg}`,
+              // Stroke painted under the fill: only the outer edge shows. Without paint-order the variable font's
+              // overlapping contours draw stroke lines inside the letters.
+              WebkitTextStroke: `8px ${c.bg}`,
+              paintOrder: "stroke fill",
               textShadow: "0 8px 0 rgba(0,0,0,0.45)",
-              marginBottom: 6,
+              marginBottom: 18,
             }}
           >
             {withHighlight(line, highlight)}
@@ -66,16 +79,20 @@ export const Thumbnail: React.FC<ThumbnailProps> = ({ title, highlight, image, b
           position: "absolute",
           left: 64,
           bottom: 44,
+          display: "flex",
+          alignItems: "center",
+          gap: 14,
           fontFamily: brand.fonts.body,
           fontSize: 32,
           fontWeight: 600,
           color: c.text,
           background: `${c.surface}E6`,
-          padding: "8px 22px 10px",
-          borderRadius: 12,
-          borderLeft: `8px solid ${c.accent}`,
+          padding: "10px 24px 10px 16px",
+          borderRadius: 14,
+          border: `1px solid ${c.emerald}40`,
         }}
       >
+        <LogoMark height={44} variant="onDark" />
         {badge}
       </div>
     </AbsoluteFill>

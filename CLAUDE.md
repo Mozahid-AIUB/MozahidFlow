@@ -40,7 +40,12 @@ A fresh machine is set up with `setup.ps1` (see README.md).
 - `D:\Video\studio\`: Remotion project with branded Bengali templates (see below).
 - `D:\Video\hyperframes\`: HyperFrames workspace (see the hyperframes skills).
 - `D:\Video\assets\fonts\{bangla,english}`: OFL fonts. `assets\music\` (with `LICENSES.md`), `assets\brand\`.
-- `D:\Video\projects\<YYYY-MM-DD_slug>\{raw,work,out,assets}` + `brief.md`: one folder per video.
+- `D:\Video\projects\<YYYY-MM-DD_slug>\{raw,reference,assets,work,out}` + `brief.md`: one folder per video,
+  copied from `projects\_TEMPLATE` (by `NEW-PROJECT.bat` or `new_project.py`).
+- `D:\Video\references\`: the user's global style library (thumbnails, intros-outros, ads-promos,
+  motion-graphics, editing-style, captions, plus `links.md`).
+- `D:\Video\PROMPTS.md` and `HOW-TO-USE.md`: the user's Bengali prompt library and guide. Keep them in sync when
+  the workflow changes.
 
 ## Skills installed (.claude/skills)
 - **ffmpeg-skill**: the editing workhorse: probe, look (contact sheets), cut, silence/filler removal, fit/reframe,
@@ -61,8 +66,14 @@ A fresh machine is set up with `setup.ps1` (see README.md).
 - **sound-effects**: measured SFX pass with a bundled CC0 kit, music beat-sync, -16 LUFS mix checks.
 
 ## Remotion templates (`D:\Video\studio`, all 1920×1080, Bengali-ready)
-Brand settings: `studio/src/brand.ts` (channel name, handle, logo, colours, fonts). Ask the user once for their
-channel name, handle, logo and colours, then fill it in.
+Brand settings: `studio/src/brand.ts`, already filled for Mozahidul Islam (see "Brand" below).
+- Brand: `LogoSting` (3 s, landscape) and `LogoStingVertical` (9:16). Props `line: tagline|taglineBn|website`,
+  `showName`.
+- `components/LogoMark.tsx` is the logo as live SVG with a build-on `progress`: use it in any new composition
+  instead of a PNG.
+- Fonts load through `loadBrandFonts()`, called in Root.tsx. A bare `import "./fonts"` is tree-shaken away,
+  because package.json's `sideEffects` lists only CSS. After any font change, render `FontCheck` (Diagnostics)
+  and confirm no line is in serif.
 - Full-screen: `Intro`, `ChapterCard`, `Outro` (has YouTube end-screen guide boxes).
 - Alpha overlays (ProRes 4444 `.mov`): `LowerThird`, `Callout` (spotlight a screen region: x/y/w/h),
   `KeyPoints`, `SubscribeReminder` (`platform: youtube|facebook`), `ChapterPanel`.
@@ -76,6 +87,49 @@ channel name, handle, logo and colours, then fill it in.
   Never put whole footage files there: the public folder is copied on every render.
 - Vertical (9:16) ad graphics are bespoke per project: build them in HyperFrames (preferred for ads) or a new
   Remotion composition.
+
+## Brand: Mozahidul Islam (apply to every video unless the brief says otherwise)
+- Kit is in `assets\brand\` (details in `brand.md`):
+  - `logo.svg/.png`: light backgrounds
+  - `logo-on-dark`: the default on our navy canvas
+  - `logo-white`: watermark
+  - `logo-badge`: profile pictures and icons
+  - `brand.json`: pass `--brand D:\Video\assets\brand\brand.json` to ffmpeg-skill caption, overlay and graphics
+- Identity:
+  - Name: "Mozahidul Islam"
+  - Website: mozahidulislam.pro.bd
+  - Tagline: "Software Engineer · Developer" (`taglineBn` for Bengali). Don't add "Researcher".
+  - Until the user gives a YouTube or FB @handle, the website stands in as the handle.
+- Palette:
+  - navy `#0A0F1C` (canvas), surface `#101726`
+  - text `#E9EEF6`, muted `#8A97AB`
+  - amber `#F5B841` (highlights, CTAs)
+  - emerald `#2BB683` / `#147A5C` (logo on dark, glows)
+  - logo on light: `#16805B` / `#0C4D46`
+- Type: Inter for Latin; Hind Siliguri for Bengali body and captions; Anek Bangla for Bengali display. Never let
+  a system fallback font through.
+- Defaults in every video:
+  1. LogoSting after the opening hook. Reels and ads under 30 s get it only at the end, `line: "website"`.
+  2. Watermark, from the end of the intro to the start of the outro:
+     `overlay.py IN --brand D:\Video\assets\brand\brand.json --logo --start S --end E --fade 0.5`
+     (white logo, top-right, about 84 px, 65 %).
+  3. Outro with the logo, name and website.
+  4. Thumbnail badge with the logo and name.
+- Premium look:
+  - Dark navy canvas and generous spacing.
+  - At most two accent colours per frame (amber and emerald).
+  - Ease-out entrances of 0.4–0.8 s. No bouncy easing, except the logo dot.
+  - At most about 7 words per graphic; respect title-safe margins.
+  - No clip-art, stock-template looks or SFX overload.
+- HyperFrames projects: copy the logo SVG and fonts into the project's `assets/`, and use the same palette and
+  type.
+
+## Scratch files (`D:\Video\_temp\`)
+- `D:\Video\_temp\<task>\` is Claude's scratch area: tests, previews, quick renders, inspected downloads.
+  Create a subfolder per task and **delete it when the task ends**; keep `README.txt`.
+- A project's intermediates belong in that project's `work\`, not here.
+- If D: has under 3 GB free, put big scratch files in the session scratchpad on C: instead.
+- `_temp` is gitignored. Never leave anything there that the user needs.
 
 ## HyperFrames rules (local-only; these override what its skills suggest)
 - Create HyperFrames projects in `D:\Video\hyperframes\<slug>` and always run the CLI through the wrapper:
@@ -105,9 +159,70 @@ channel name, handle, logo and colours, then fill it in.
   cloud, TTS and stock search need the user's own account; ask first.
 - Copy final renders into the video's `projects\<slug>\out\`.
 
+## Using references (do this every time a reference is given)
+Sources, in order:
+- the project's `reference\` folder
+- links in `brief.md` or the prompt
+- the global `references\` library (subfolders plus `links.md`) whose category matches the job (ads, intros,
+  thumbnails, …)
+
+1. **Local clips** (`.mp4/.mov/.webm` in `reference\` or `references\`):
+   - `look.py <clip> --tiles 4x3`, then view the sheet.
+   - `scenes.py <clip>`: cuts per minute = pace.
+   - `probe.py`: aspect and fps.
+   - Optional librosa tempo on the audio for music BPM.
+   - For a close look at a moment, extract frames at 0.5–1 s steps over that span.
+2. **Images and screenshots**: view them directly.
+3. **YouTube / Facebook / Instagram links**:
+   - **If the `mcp__claude-in-chrome__*` tools exist** (load the `anthropic-skills:chrome-browser` skill
+     first):
+     - Run `tabs_context_mcp`, then open a **new** tab and navigate to the link.
+     - Wait for or skip any ad, pause the video, and move the pointer off the player so the controls hide.
+     - Take screenshots at roughly 10 points across the video. On YouTube: press `k` to pause, then number keys
+       `0`–`9` jump to 0–90 %. Or reload with `&t=<seconds>s`.
+     - For a fast sequence (an intro or a transition), take 4–6 shots about 0.5 s apart; use `,` / `.` to step
+       frames while paused.
+     - Also grab the thumbnail via oEmbed (below).
+     - Close the tabs you opened, and never touch the user's own tabs.
+     - Never log in, like, comment, subscribe or change anything on the user's accounts.
+     - If a site asks for permission or a login, or shows a captcha, stop and ask the user.
+   - **If the Chrome tools are not connected**:
+     - YouTube: `curl "https://www.youtube.com/oembed?url=<link>&format=json"` gives the title and channel.
+       Download `https://i.ytimg.com/vi/<id>/maxresdefault.jpg` (fallback `hqdefault.jpg`) to `work\reference\`
+       and view it.
+     - Tell the user that the inside of the video can't be seen without Chrome. Ask them to type `@browser` in
+       the prompt box (connects this session) or to send a 10–30 s clip or screenshots.
+   - Don't download other people's videos (yt-dlp etc.): the platforms' terms forbid it. Use it only for the
+     user's own videos, and only if they ask.
+4. **Website or product links**: read them with WebFetch (text, features, colours) or the Chrome tools (layout
+   and screenshots of the UI).
+5. **Write the analysis** into `brief.md` under "রেফারেন্স বিশ্লেষণ": one block per reference covering
+   - pace (cuts per minute and shot length)
+   - typography (weight, size, case, placement, how text enters and exits)
+   - colour palette (approximate hex) and grade (warm/cool, contrast)
+   - motion (zooms, camera moves, transitions)
+   - captions style
+   - graphics (lower thirds, callouts, overlays)
+   - thumbnail composition
+   - music feel (only from a local file you can analyse; say so when you can't hear it)
+
+   End with **"what we will borrow"** and **"what we will not"**. The edit plan must cite these choices.
+6. **Style only.** Never copy a reference's footage, music, logos, characters or exact text into the output, and
+   never trace a thumbnail one-to-one. Rebuild the *style* with our own templates, fonts, music and SFX.
+7. Save the reference frames you capture to `work\reference\` (screenshots, contact sheets) so later revisions
+   can reuse them without re-opening the links.
+
 ## Standard workflow (raw video + prompt)
-1. **Project**: `python D:\Video\tools\scripts\new_project.py <slug> --src <files>` (`--move` if D: is tight).
-   Paste the user's prompt into `brief.md`. Never modify files in `raw\`.
+1. **Project and brief**:
+   - The user usually creates the project with `NEW-PROJECT.bat` (a copy of `projects\_TEMPLATE`), drops files
+     into `raw\`, `reference\` and `assets\`, and fills the Bengali form in `brief.md`.
+   - If they only give a path and a prompt, run `python D:\Video\tools\scripts\new_project.py <slug> --src <files>`
+     (`--move` if D: is tight) and paste the prompt into section ১ of `brief.md`. Never modify files in `raw\`.
+   - Read `brief.md` first. Fill the gaps with sensible defaults; ask only about choices that change the output.
+   - Brand: `assets\brand\` (`logo.png`, `brand.md`). If `studio\src\brand.ts` still has placeholders and brand
+     files exist, apply them first.
+   - **References are mandatory input.** Whenever the brief, the prompt, `reference\` or `references\` holds any
+     reference, analyse it before writing the plan. Follow "Using references" below.
 2. **Ingest check**: run ffmpeg-skill `probe.py`. Browser and phone screen recordings are often VFR or have
    `duration=N/A`. Normalise those once to a CFR mezzanine in `work\` (x264 CRF 18, matching or 30 fps,
    AAC 48 kHz) before any cutting, so audio stays in sync.

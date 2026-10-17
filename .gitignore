@@ -1,6 +1,11 @@
 # ── Your footage and finished videos (private) ─────────────────────────────
 projects/*
 !projects/.gitkeep
+!projects/_TEMPLATE/
+references/**/*
+!references/*/
+!references/**/.gitkeep
+!references/README.md
 Thesis Video/
 *.mp4
 *.mov
@@ -14,8 +19,8 @@ assets/music/**/*.mp3
 assets/music/**/*.ogg
 
 # ── Brand assets (add your own locally) ─────────────────────────────────────
-assets/brand/*
-!assets/brand/.gitkeep
+# Brand kit (public brand: logo masters + exports, palette, ffmpeg-skill brand.json) is tracked
+_temp/
 
 # ── Installed / downloaded by setup.ps1 ─────────────────────────────────────
 tools/.venv/
