@@ -96,7 +96,8 @@ Brand settings: `studio/src/brand.ts`, already filled for Mozahidul Islam (see "
   - `logo-badge`: profile pictures and icons
   - `brand.json`: pass `--brand D:\Video\assets\brand\brand.json` to ffmpeg-skill caption, overlay and graphics
 - Identity:
-  - Name: "Mozahidul Islam"
+  - Name: "Mozahidul Islam". The user decided this name goes everywhere: videos, thumbnails, descriptions,
+    channel. Not "Mozahid Islam", "Mozahid Software" or "Mozahid TechVision".
   - Website: mozahidulislam.pro.bd
   - Tagline: "Software Engineer · Web, Mobile & AI"; Bengali "সফটওয়্যার ইঞ্জিনিয়ার · ওয়েব, মোবাইল ও AI"
     (`tagline` / `taglineBn` in brand.ts). The user chose it: don't add "Researcher" or change it unasked.
