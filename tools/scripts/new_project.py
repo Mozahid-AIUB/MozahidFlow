@@ -22,6 +22,14 @@ from pathlib import Path
 
 PROJECTS = Path(__file__).resolve().parents[2] / "projects"
 TEMPLATE = PROJECTS / "_TEMPLATE"
+TEMPLATE_ITEMS = {"brief.md", "raw", "reference", "assets", "work", "out"}
+
+
+def structure_only(dirpath: str, names: list) -> list:
+    """copytree ignore: copy brief.md and the empty subfolders, never files someone dropped into _TEMPLATE."""
+    if Path(dirpath) == TEMPLATE:
+        return [n for n in names if n not in TEMPLATE_ITEMS]
+    return names
 
 
 def main() -> None:
@@ -37,7 +45,7 @@ def main() -> None:
     if proj.exists():
         print(f"already exists, left as is: {proj}")
     else:
-        shutil.copytree(TEMPLATE, proj, ignore=shutil.ignore_patterns(".gitkeep"))
+        shutil.copytree(TEMPLATE, proj, ignore=structure_only)
         brief = proj / "brief.md"
         brief.write_text(brief.read_text(encoding="utf-8").replace("{name}", proj.name), encoding="utf-8")
         print(f"created: {proj}")

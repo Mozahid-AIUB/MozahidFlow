@@ -189,7 +189,10 @@ Sources, in order:
      - For a fast sequence (an intro or a transition), take 4–6 shots about 0.5 s apart; use `,` / `.` to step
        frames while paused.
      - Also grab the thumbnail via oEmbed (below).
-     - Close the tabs you opened, and never touch the user's own tabs.
+     - Close the tabs you opened, and never touch the user's own tabs. If your tab group disappears, the user
+       closed it: don't silently reopen it mid-task; say so and continue only when the task needs it.
+     - The user's Chrome is signed in to their YouTube channel. Owner controls (Customise channel, Manage
+       videos, Studio) are visible: never click them.
      - Never log in, like, comment, subscribe or change anything on the user's accounts.
      - If a site asks for permission or a login, or shows a captcha, stop and ask the user.
    - **If the Chrome tools are not connected**:
